@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Yazısı | US-CAR</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts: Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="container">
+            <a class="navbar-brand" href="index.html">
+                <i class="fas fa-car-side"></i> US-CAR
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Anasayfa</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html#cars">Araçlarımız</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Kampanyalar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Hakkımızda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">İletişim</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="blog.html">Blog</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Post Content Section -->
+    <section class="container mt-5 pt-5">
+        <div class="row" id="post-container">
+            <!-- Dinamik post içeriği buraya gelecek -->
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white text-center p-4 mt-5">
+        <div class="container">
+            <p>&copy; 2025 US-CAR. Tüm hakları saklıdır.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const postContainer = document.getElementById('post-container');
+            const urlParams = new URLSearchParams(window.location.search);
+            const postId = urlParams.get('id');
+
+            if (!postId) {
+                postContainer.innerHTML = '<div class="col-12 text-center"><h1>Yazı bulunamadı.</h1><p>Geçerli bir yazı ID\'si belirtilmedi. <a href="blog.html">Blog\'a geri dönün</a>.</p></div>';
+                return;
+            }
+
+            postContainer.innerHTML = '<div class="col-12 text-center"><p>Yazı yükleniyor...</p></div>';
+
+            try {
+                const response = await fetch(`http://localhost:5000/api/posts/${postId}`);
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.msg || 'Yazı yüklenemedi.');
+                }
+                const post = await response.json();
+
+                document.title = `${post.title} | US-CAR`; // Sayfa başlığını güncelle
+
+                const postDate = new Date(post.createdAt).toLocaleDateString('tr-TR', {
+                    year: 'numeric', month: 'long', day: 'numeric'
+                });
+
+                // Gelen içeriği HTML'e uygun hale getir (yeni satırları <br> yap)
+                const formattedContent = post.content.replace(/\\n/g, '<br>');
+
+                postContainer.innerHTML = `
+                    <div class="col-lg-10 offset-lg-1">
+                        <h1 class="mb-3">${post.title}</h1>
+                        <p class="text-muted mb-4">${postDate} | US-CAR Ekibi</p>
+                        <img src="${post.imageUrl}" class="img-fluid rounded mb-4 w-100" alt="${post.title}" style="max-height: 500px; object-fit: cover;">
+                        <div class="post-body fs-5">
+                            ${formattedContent}
+                        </div>
+                        <a href="blog.html" class="btn btn-primary mt-5">Tüm Yazılara Geri Dön</a>
+                    </div>
+                `;
+
+            } catch (error) {
+                console.error('Yazı detayı getirilirken hata:', error);
+                postContainer.innerHTML = `<div class="col-12 text-center"><h1 class="text-danger">Hata</h1><p>${error.message}</p> <a href="blog.html">Blog'a geri dönün</a>.</div>`;
+            }
+        });
+    </script>
+</body>
+
+</html>

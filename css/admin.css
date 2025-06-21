@@ -1,0 +1,48 @@
+body {
+    font-family: 'Montserrat', sans-serif;
+    background-color: #f0f2f5;
+    /* Hafif gri bir arka plan */
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 0.5rem;
+}
+
+/* Dashboard için stiller */
+.dashboard-nav {
+    background-color: #343a40;
+    /* Koyu Sidebar */
+    color: white;
+}
+
+.dashboard-nav .nav-link {
+    color: rgba(255, 255, 255, 0.75);
+    border-radius: .25rem;
+    margin-bottom: 0.5rem;
+}
+
+.dashboard-nav .nav-link:hover,
+.dashboard-nav .nav-link.active {
+    color: white;
+    background-color: #495057;
+}
+
+.dashboard-nav .nav-link .fa-fw {
+    width: 1.25em;
+}
+
+.main-content {
+    padding: 2rem;
+}

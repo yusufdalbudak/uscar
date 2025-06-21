@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="tr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kontrol Paneli | US-CAR Admin</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts: Montserrat -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Custom Admin CSS -->
+    <link rel="stylesheet" href="css/admin.css">
+    <script>
+        // Sayfa koruma script'i
+        document.addEventListener('DOMContentLoaded', () => {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                window.location.href = 'admin.html';
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div class="d-flex">
+        <!-- Sidebar -->
+        <nav class="d-flex flex-column flex-shrink-0 p-3 vh-100 dashboard-nav">
+            <a href="admin-dashboard.html" class="navbar-brand text-white mb-4">
+                <i class="fas fa-cogs me-2"></i>
+                <span>Admin Paneli</span>
+            </a>
+            <ul class="nav nav-pills flex-column mb-auto">
+                <li class="nav-item">
+                    <a href="admin-dashboard.html" class="nav-link active">
+                        <i class="fas fa-tachometer-alt me-2"></i>
+                        <span>Kontrol Paneli</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="admin.html" class="nav-link">
+                        <i class="fas fa-sign-out-alt me-2"></i>
+                        <span>Çıkış Yap</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content flex-grow-1">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h1>Blog Yazıları</h1>
+                <a href="admin-add-post.html" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i>Yeni Yazı Ekle
+                </a>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Başlık</th>
+                                <th scope="col">Yayınlanma Tarihi</th>
+                                <th scope="col">İşlemler</th>
+                            </tr>
+                        </thead>
+                        <tbody id="posts-table-body">
+                            <!-- Dinamik içerik buraya gelecek -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            const tableBody = document.getElementById('posts-table-body');
+
+            // Yükleniyor mesajını göster
+            tableBody.innerHTML = '<tr><td colspan="3" class="text-center">Yazılar yükleniyor...</td></tr>';
+
+            try {
+                const response = await fetch('http://localhost:5000/api/posts');
+                if (!response.ok) {
+                    throw new Error('Sunucudan yazılar alınamadı.');
+                }
+                const posts = await response.json();
+
+                tableBody.innerHTML = ''; // Yükleniyor mesajını temizle
+
+                if (posts.length === 0) {
+                    tableBody.innerHTML = '<tr><td colspan="3" class="text-center">Henüz hiç yazı eklenmemiş.</td></tr>';
+                } else {
+                    posts.forEach(post => {
+                        const row = document.createElement('tr');
+                        const postDate = new Date(post.createdAt).toLocaleDateString('tr-TR', {
+                            year: 'numeric', month: 'long', day: 'numeric'
+                        });
+
+                        row.innerHTML = `
+                            <td>${post.title || '(Başlık Yok)'}</td>
+                            <td>${postDate}</td>
+                            <td>
+                                <button class="btn btn-sm btn-warning">Düzenle</button>
+                                <button class="btn btn-sm btn-danger" onclick="deletePost('${post._id}', this)">Sil</button>
+                            </td>
+                        `;
+                        tableBody.appendChild(row);
+                    });
+                }
+            } catch (error) {
+                console.error('Yazılar yüklenirken hata:', error);
+                tableBody.innerHTML = `<tr><td colspan="3" class="text-center text-danger">Hata: ${error.message}</td></tr>`;
+            }
+        });
+
+        async function deletePost(postId, buttonElement) {
+            if (!confirm("Bu yazıyı KALICI olarak silmek istediğinize emin misiniz? Bu işlem geri alınamaz.")) {
+                return;
+            }
+
+            try {
+                const token = localStorage.getItem('token');
+                const response = await fetch(`http://localhost:5000/api/posts/${postId}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'x-auth-token': token
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error('Yazı silinirken bir hata oluştu.');
+                }
+
+                const responseData = await response.json();
+
+                // Başarılı olursa satırı tablodan kaldır
+                buttonElement.closest('tr').remove();
+                alert(responseData.msg || 'Yazı veritabanından başarıyla silindi.');
+
+            } catch (error) {
+                console.error('Silme hatası:', error);
+                alert('Hata: ' + error.message);
+            }
+        }
+    </script>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
