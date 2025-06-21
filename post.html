@@ -81,10 +81,9 @@
             postContainer.innerHTML = '<div class="col-12 text-center"><p>Yazı yükleniyor...</p></div>';
 
             try {
-                const response = await fetch(`http://localhost:5000/api/posts/${postId}`);
+                const response = await fetch(`/api/posts/${postId}`);
                 if (!response.ok) {
-                    const errorData = await response.json();
-                    throw new Error(errorData.msg || 'Yazı yüklenemedi.');
+                    throw new Error('Yazı yüklenemedi.');
                 }
                 const post = await response.json();
 
@@ -111,7 +110,7 @@
 
             } catch (error) {
                 console.error('Yazı detayı getirilirken hata:', error);
-                postContainer.innerHTML = `<div class="col-12 text-center"><h1 class="text-danger">Hata</h1><p>${error.message}</p> <a href="blog.html">Blog'a geri dönün</a>.</div>`;
+                postContainer.innerHTML = `<div class="col-12 text-center"><h1 class="text-danger">Hata</h1><p>Failed to fetch</p> <a href="blog.html">Blog'a geri dönün</a>.</div>`;
             }
         });
     </script>
