@@ -12,13 +12,13 @@ const PORT = process.env.PORT || 5000;
 app.use(cors()); // Enable CORS for all routes
 app.use(express.json()); // Allow the server to accept JSON data
 
-// Statik dosyaları sun (HTML, CSS, JS, Resimler vb.)
-// __dirname, backend klasörünün yolunu verir. '..' ile bir üst dizine (proje kök dizinine) çıkarız.
-app.use(express.static(path.join(__dirname, '..')));
-
-// Rotaları Tanımla
+// API Rotalarını Tanımla
 app.use('/api/posts', require('./routes/posts'));
 app.use('/api/auth', require('./routes/auth'));
+
+// Statik dosyaları sun (HTML, CSS, JS, Resimler vb.)
+// Bu bölüm API rotalarından SONRA gelmeli.
+app.use(express.static(path.join(__dirname, '..')));
 
 // --- Database Connection ---
 const mongoUri = process.env.MONGODB_URI;
@@ -27,8 +27,9 @@ mongoose.connect(mongoUri)
     .then(() => console.log('MongoDB veritabanına başarıyla bağlandı.'))
     .catch(err => console.error('MongoDB bağlantı hatası:', err));
 
-// Kök dizin dışındaki tüm istekler için index.html'i sun (Single Page Application desteği için)
-app.get('*', (req, res) => {
+// API dışındaki tüm GET istekleri için index.html'i sun
+// Bu, en sonda kalmalı.
+app.get(/^(?!\/api).*/, (req, res) => {
     res.sendFile(path.join(__dirname, '..', 'index.html'));
 });
 
