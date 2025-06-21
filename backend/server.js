@@ -21,9 +21,12 @@ app.use('/api/auth', require('./routes/auth'));
 app.use(express.static(path.join(__dirname, '..')));
 
 // --- Database Connection ---
-const mongoUri = process.env.MONGODB_URI;
+const mongoUri = process.env.MONGO_URI;
 
-mongoose.connect(mongoUri)
+mongoose.connect(mongoUri, {
+    serverSelectionTimeoutMS: 30000, // 30 saniye içinde sunucu bulmaya çalış
+    socketTimeoutMS: 45000, // 45 saniye boyunca aktif olmayan soketi kapat
+})
     .then(() => console.log('MongoDB veritabanına başarıyla bağlandı.'))
     .catch(err => console.error('MongoDB bağlantı hatası:', err));
 
