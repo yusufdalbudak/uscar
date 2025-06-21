@@ -89,7 +89,7 @@
             container.innerHTML = '<p class="text-center">Yazılar yükleniyor...</p>';
 
             try {
-                const response = await fetch('http://localhost:5000/api/posts');
+                const response = await fetch('/api/posts');
                 if (!response.ok) {
                     throw new Error('Sunucudan veriler alınamadı.');
                 }
@@ -126,7 +126,7 @@
                 }
             } catch (error) {
                 console.error('Blog yazıları yüklenirken hata:', error);
-                container.innerHTML = `<p class="text-center text-danger">Hata: ${error.message}</p>`;
+                container.innerHTML = `<p class="text-center text-danger">Hata: Yazılar yüklenemedi. Lütfen daha sonra tekrar deneyin.</p>`;
             }
         });
     </script>
