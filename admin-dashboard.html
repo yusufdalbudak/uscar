@@ -84,7 +84,7 @@
             tableBody.innerHTML = '<tr><td colspan="3" class="text-center">Yazılar yükleniyor...</td></tr>';
 
             try {
-                const response = await fetch('http://localhost:5000/api/posts');
+                const response = await fetch('/api/posts');
                 if (!response.ok) {
                     throw new Error('Sunucudan yazılar alınamadı.');
                 }
@@ -125,7 +125,7 @@
 
             try {
                 const token = localStorage.getItem('token');
-                const response = await fetch(`http://localhost:5000/api/posts/${postId}`, {
+                const response = await fetch(`/api/posts/${postId}`, {
                     method: 'DELETE',
                     headers: {
                         'x-auth-token': token
