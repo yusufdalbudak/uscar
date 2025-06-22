@@ -14,6 +14,7 @@ app.use(express.json()); // Allow the server to accept JSON data
 
 // API Rotalarını Tanımla
 app.use('/api/posts', require('./routes/posts'));
+app.use('/api/cars', require('./routes/cars'));
 app.use('/api/auth', require('./routes/auth'));
 
 // Statik dosyaları sun (HTML, CSS, JS, Resimler vb.)

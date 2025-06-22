@@ -3,99 +3,16 @@ const mongoose = require('mongoose');
 const postSchema = new mongoose.Schema({
     title: {
         type: String,
-        required: false
+        required: true
     },
     content: {
         type: String,
-        required: false
-    },
-    shortDescription: {
-        type: String,
-        required: false,
-        default: ''
-    },
-    dailyPrice: {
-        type: Number,
-        required: true,
-        default: 0
-    },
-    transmission: {
-        type: String,
-        required: true,
-        enum: ['Otomatik', 'Manuel']
-    },
-    fuelType: {
-        type: String,
-        required: true,
-        enum: ['Benzin', 'Dizel', 'Elektrik', 'Hibrit']
-    },
-    passengers: {
-        type: Number,
-        required: true,
-        default: 5
-    },
-    doorCount: {
-        type: Number,
-        required: false,
-        default: 4
-    },
-    luggageCapacity: {
-        type: String,
-        required: false,
-        default: '425lt'
-    },
-    modelYear: {
-        type: String,
-        required: false,
-        default: 'Bilinmiyor'
-    },
-    bodyType: {
-        type: String,
-        required: false,
-        default: 'Bilinmiyor'
-    },
-    engineVolume: {
-        type: String,
-        required: false,
-        default: 'Bilinmiyor'
-    },
-    fuelConsumption: {
-        type: String,
-        required: false,
-        default: 'Bilinmiyor'
-    },
-    carbonEmission: {
-        type: String,
-        required: false,
-        default: 'Bilinmiyor'
-    },
-    minLicenseAge: {
-        type: Number,
-        required: false,
-        default: 2
-    },
-    minDriverAge: {
-        type: Number,
-        required: false,
-        default: 25
-    },
-    features: {
-        type: [String],
-        default: []
-    },
-    galleryImageUrls: {
-        type: [String],
-        default: []
+        required: true
     },
     imageUrl: {
         type: String,
         required: false,
-        default: 'https://via.placeholder.com/400x250.png?text=US-CAR'
-    },
-    category: {
-        type: String,
-        required: true,
-        enum: ['ekonomik', 'orta', 'lüks']
+        default: 'https://via.placeholder.com/400x250.png?text=US-CAR+Blog'
     },
     createdAt: {
         type: Date,

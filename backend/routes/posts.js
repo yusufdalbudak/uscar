@@ -1,19 +1,14 @@
 const express = require('express');
 const router = express.Router();
-const Post = require('../models/Post'); // Az önce oluşturduğumuz Post modelini import ediyoruz
-const auth = require('../middleware/auth'); // Auth middleware'ini import et
+const Post = require('../models/Post');
+const auth = require('../middleware/auth');
 
 // @route   GET api/posts
-// @desc    Tüm postları getir
+// @desc    Tüm blog yazılarını getir
 // @access  Public
 router.get('/', async (req, res) => {
     try {
-        const { category } = req.query;
-        const filter = {};
-        if (category && category !== 'all') {
-            filter.category = category;
-        }
-        const posts = await Post.find(filter).sort({ createdAt: -1 });
+        const posts = await Post.find().sort({ createdAt: -1 });
         res.json(posts);
     } catch (err) {
         console.error(err.message);
@@ -22,7 +17,7 @@ router.get('/', async (req, res) => {
 });
 
 // @route   GET api/posts/:id
-// @desc    Tek bir postu ID ile getir
+// @desc    Tek bir yazıyı ID ile getir
 // @access  Public
 router.get('/:id', async (req, res) => {
     try {
@@ -43,54 +38,20 @@ router.get('/:id', async (req, res) => {
 });
 
 // @route   POST api/posts
-// @desc    Yeni bir post oluştur
+// @desc    Yeni bir blog yazısı oluştur
 // @access  Private
 router.post('/', auth, async (req, res) => {
     const {
         title,
         content,
-        shortDescription,
-        dailyPrice,
-        transmission,
-        fuelType,
-        passengers,
-        doorCount,
-        luggageCapacity,
-        modelYear,
-        bodyType,
-        engineVolume,
-        fuelConsumption,
-        carbonEmission,
-        minLicenseAge,
-        minDriverAge,
-        features,
-        galleryImageUrls,
-        imageUrl,
-        category
+        imageUrl
     } = req.body;
 
     try {
         const newPost = new Post({
             title,
             content,
-            shortDescription,
-            dailyPrice,
-            transmission,
-            fuelType,
-            passengers,
-            doorCount,
-            luggageCapacity,
-            modelYear,
-            bodyType,
-            engineVolume,
-            fuelConsumption,
-            carbonEmission,
-            minLicenseAge,
-            minDriverAge,
-            features,
-            galleryImageUrls,
-            imageUrl,
-            category
+            imageUrl
         });
 
         const post = await newPost.save();
@@ -102,7 +63,7 @@ router.post('/', auth, async (req, res) => {
 });
 
 // @route   DELETE api/posts/:id
-// @desc    Bir postu ID ile sil
+// @desc    Bir yazıyı ID ile sil
 // @access  Private
 router.delete('/:id', auth, async (req, res) => {
     try {

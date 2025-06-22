@@ -40,7 +40,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="admin.html" class="nav-link">
+                    <a href="admin.html" class="nav-link" onclick="localStorage.removeItem('token')">
                         <i class="fas fa-sign-out-alt me-2"></i>
                         <span>Çıkış Yap</span>
                     </a>
@@ -50,103 +50,147 @@
 
         <!-- Main Content -->
         <main class="main-content flex-grow-1">
-            <div class="d-flex justify-content-between align-items-center mb-4">
-                <h1>Blog Yazıları</h1>
-                <a href="admin-add-post.html" class="btn btn-primary">
-                    <i class="fas fa-plus me-2"></i>Yeni Yazı Ekle
-                </a>
-            </div>
-
-            <div class="card">
-                <div class="card-body">
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Başlık</th>
-                                <th scope="col">Yayınlanma Tarihi</th>
-                                <th scope="col">İşlemler</th>
-                            </tr>
-                        </thead>
-                        <tbody id="posts-table-body">
-                            <!-- Dinamik içerik buraya gelecek -->
-                        </tbody>
-                    </table>
+            <!-- Araç Yönetimi -->
+            <section id="car-management">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h1><i class="fas fa-car me-2"></i>Araç Yönetimi</h1>
+                    <a href="admin-add-car.html" class="btn btn-primary">
+                        <i class="fas fa-plus me-2"></i>Yeni Araç Ekle
+                    </a>
                 </div>
-            </div>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Araç Adı</th>
+                                    <th scope="col">Kategori</th>
+                                    <th scope="col">Günlük Fiyat</th>
+                                    <th scope="col">Eklenme Tarihi</th>
+                                    <th scope="col">İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody id="cars-table-body">
+                                <!-- Araçlar buraya gelecek -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <hr class="my-5">
+
+            <!-- Blog Yönetimi -->
+            <section id="blog-management">
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <h2><i class="fas fa-blog me-2"></i>Blog Yönetimi</h2>
+                    <a href="admin-add-post.html" class="btn btn-info text-white">
+                        <i class="fas fa-plus me-2"></i>Yeni Yazı Ekle
+                    </a>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Başlık</th>
+                                    <th scope="col">Yayınlanma Tarihi</th>
+                                    <th scope="col">İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody id="posts-table-body">
+                                <!-- Blog yazıları buraya gelecek -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
         </main>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            const tableBody = document.getElementById('posts-table-body');
+        const token = localStorage.getItem('token');
 
-            // Yükleniyor mesajını göster
-            tableBody.innerHTML = '<tr><td colspan="3" class="text-center">Yazılar yükleniyor...</td></tr>';
+        // Genel veri çekme ve tablo oluşturma fonksiyonu
+        async function fetchDataAndPopulateTable(apiUrl, tableBodyId, rowGenerator, noDataMessage) {
+            const tableBody = document.getElementById(tableBodyId);
+            tableBody.innerHTML = `<tr><td colspan="5" class="text-center">Yükleniyor...</td></tr>`;
 
             try {
-                const response = await fetch('/api/posts');
-                if (!response.ok) {
-                    throw new Error('Sunucudan yazılar alınamadı.');
-                }
-                const posts = await response.json();
+                const response = await fetch(apiUrl);
+                if (!response.ok) throw new Error(`Veri alınamadı: ${response.statusText}`);
+                const items = await response.json();
 
-                tableBody.innerHTML = ''; // Yükleniyor mesajını temizle
-
-                if (posts.length === 0) {
-                    tableBody.innerHTML = '<tr><td colspan="3" class="text-center">Henüz hiç yazı eklenmemiş.</td></tr>';
+                tableBody.innerHTML = '';
+                if (items.length === 0) {
+                    tableBody.innerHTML = `<tr><td colspan="5" class="text-center">${noDataMessage}</td></tr>`;
                 } else {
-                    posts.forEach(post => {
-                        const row = document.createElement('tr');
-                        const postDate = new Date(post.createdAt).toLocaleDateString('tr-TR', {
-                            year: 'numeric', month: 'long', day: 'numeric'
-                        });
-
-                        row.innerHTML = `
-                            <td>${post.title || '(Başlık Yok)'}</td>
-                            <td>${postDate}</td>
-                            <td>
-                                <button class="btn btn-sm btn-warning">Düzenle</button>
-                                <button class="btn btn-sm btn-danger" onclick="deletePost('${post._id}', this)">Sil</button>
-                            </td>
-                        `;
-                        tableBody.appendChild(row);
-                    });
+                    items.forEach(item => tableBody.appendChild(rowGenerator(item)));
                 }
             } catch (error) {
-                console.error('Yazılar yüklenirken hata:', error);
-                tableBody.innerHTML = `<tr><td colspan="3" class="text-center text-danger">Hata: ${error.message}</td></tr>`;
-            }
-        });
-
-        async function deletePost(postId, buttonElement) {
-            if (!confirm("Bu yazıyı KALICI olarak silmek istediğinize emin misiniz? Bu işlem geri alınamaz.")) {
-                return;
-            }
-
-            try {
-                const token = localStorage.getItem('token');
-                const response = await fetch(`/api/posts/${postId}`, {
-                    method: 'DELETE',
-                    headers: {
-                        'x-auth-token': token
-                    }
-                });
-
-                if (!response.ok) {
-                    throw new Error('Yazı silinirken bir hata oluştu.');
-                }
-
-                const responseData = await response.json();
-
-                // Başarılı olursa satırı tablodan kaldır
-                buttonElement.closest('tr').remove();
-                alert(responseData.msg || 'Yazı veritabanından başarıyla silindi.');
-
-            } catch (error) {
-                console.error('Silme hatası:', error);
-                alert('Hata: ' + error.message);
+                console.error('Yüklenirken hata:', error);
+                tableBody.innerHTML = `<tr><td colspan="5" class="text-center text-danger">Hata: ${error.message}</td></tr>`;
             }
         }
+
+        // Genel silme fonksiyonu
+        async function deleteItem(id, apiUrl, itemName, buttonElement) {
+            if (!confirm(`Bu ${itemName} öğesini KALICI olarak silmek istediğinize emin misiniz?`)) return;
+
+            try {
+                const response = await fetch(`${apiUrl}/${id}`, {
+                    method: 'DELETE',
+                    headers: { 'x-auth-token': token }
+                });
+                if (!response.ok) throw new Error(`${itemName} silinirken bir hata oluştu.`);
+
+                const responseData = await response.json();
+                buttonElement.closest('tr').remove();
+                alert(responseData.msg || `${itemName} başarıyla silindi.`);
+            } catch (error) {
+                console.error('Silme hatası:', error);
+                alert(`Hata: ${error.message}`);
+            }
+        }
+
+        // Araç satırı oluşturucu
+        const createCarRow = (car) => {
+            const row = document.createElement('tr');
+            const carDate = new Date(car.createdAt).toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' });
+            row.innerHTML = `
+                <td>${car.title || '(Başlık Yok)'}</td>
+                <td><span class="badge bg-secondary">${car.category || 'N/A'}</span></td>
+                <td>${car.dailyPrice ? car.dailyPrice.toFixed(2) + ' ₺' : 'N/A'}</td>
+                <td>${carDate}</td>
+                <td>
+                    <button class="btn btn-sm btn-warning disabled">Düzenle</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteItem('${car._id}', '/api/cars', 'araç', this)">Sil</button>
+                </td>
+            `;
+            return row;
+        };
+
+        // Blog yazısı satırı oluşturucu
+        const createPostRow = (post) => {
+            const row = document.createElement('tr');
+            const postDate = new Date(post.createdAt).toLocaleDateString('tr-TR', { day: '2-digit', month: 'long', year: 'numeric' });
+            row.innerHTML = `
+                <td>${post.title || '(Başlık Yok)'}</td>
+                <td>${postDate}</td>
+                <td>
+                    <button class="btn btn-sm btn-warning disabled">Düzenle</button>
+                    <button class="btn btn-sm btn-danger" onclick="deleteItem('${post._id}', '/api/posts', 'yazı', this)">Sil</button>
+                </td>
+            `;
+            return row;
+        };
+
+        // Sayfa yüklendiğinde verileri çek
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchDataAndPopulateTable('/api/cars', 'cars-table-body', createCarRow, 'Henüz hiç araç eklenmemiş.');
+            fetchDataAndPopulateTable('/api/posts', 'posts-table-body', createPostRow, 'Henüz hiç blog yazısı eklenmemiş.');
+        });
+
     </script>
 
     <!-- Bootstrap JS -->

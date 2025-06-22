@@ -178,7 +178,7 @@
             postContainer.innerHTML = '<div class="container text-center my-5 py-5"><h3><i class="fas fa-spinner fa-spin"></i> Araç bilgileri yükleniyor...</h3></div>';
 
             try {
-                const response = await fetch(`/api/posts/${postId}`);
+                const response = await fetch(`/api/cars/${postId}`);
                 if (!response.ok) { throw new Error('Araç yüklenemedi.'); }
                 const car = await response.json();
 
@@ -214,7 +214,7 @@
                                 <div id="detailed-content">
                                     <h3 class="mb-4">${car.title}</h3>
                                     <div class="content-text">
-                                        ${car.content.replace(/\\n/g, '<br>') || 'Bu araç için detaylı bir açıklama bulunmamaktadır.'}
+                                        ${(car.content || '').replace(/\\n/g, '<br>') || 'Bu araç için detaylı bir açıklama bulunmamaktadır.'}
                                     </div>
                                 </div>
                             </div>
@@ -226,11 +226,11 @@
                                             <tbody>
                                                 <tr><th>Model</th><td>${car.modelYear}</td></tr>
                                                 <tr><th>Gövde Tipi</th><td>${car.bodyType}</td></tr>
-                                                <tr><th>Motor Hacmi</th><td>${car.engineVolume} cc</td></tr>
-                                                <tr><th>Yakıt Tüketimi</th><td>${car.fuelConsumption}</td></tr>
-                                                <tr><th>Karbon Emisyonu</th><td>${car.carbonEmission}</td></tr>
-                                                <tr><th>Min. Ehliyet Yaşı</th><td>${car.minLicenseAge}</td></tr>
-                                                <tr><th>Min. Sürücü Yaşı</th><td>${car.minDriverAge}</td></tr>
+                                                <tr><th>Motor Hacmi</th><td>${car.engineVolume || 'N/A'} cc</td></tr>
+                                                <tr><th>Yakıt Tüketimi</th><td>${car.fuelConsumption || 'N/A'}</td></tr>
+                                                <tr><th>Karbon Emisyonu</th><td>${car.carbonEmission || 'N/A'}</td></tr>
+                                                <tr><th>Min. Ehliyet Yaşı</th><td>${car.minLicenseAge || 'N/A'}</td></tr>
+                                                <tr><th>Min. Sürücü Yaşı</th><td>${car.minDriverAge || 'N/A'}</td></tr>
                                             </tbody>
                                         </table>
                                         <div class="d-grid mt-4">

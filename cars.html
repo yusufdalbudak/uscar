@@ -157,7 +157,7 @@
             async function loadCars() {
                 carListContainer.innerHTML = '<div class="col-12 text-center"><h3><i class="fas fa-spinner fa-spin"></i> Araçlar yükleniyor...</h3></div>';
                 try {
-                    const response = await fetch('/api/posts');
+                    const response = await fetch('/api/cars');
                     if (!response.ok) throw new Error('Araçlar yüklenemedi.');
                     allCars = await response.json();
                     renderCars(allCars);
@@ -182,7 +182,7 @@
                                     <h5 class="card-title">${car.title}</h5>
                                     <p class="card-text text-muted flex-grow-1">${car.shortDescription || ''}</p>
                                     <div class="d-flex justify-content-between align-items-center mt-auto">
-                                        <p class="fw-bold fs-5 mb-0">${car.dailyPrice} ₺/Gün</p>
+                                        <p class="fw-bold fs-5 mb-0">${car.dailyPrice ? car.dailyPrice.toFixed(2) : '0.00'} ₺/Gün</p>
                                         <span class="btn btn-primary">Detayları Gör</span>
                                     </div>
                                 </div>
