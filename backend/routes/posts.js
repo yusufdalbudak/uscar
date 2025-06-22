@@ -46,12 +46,31 @@ router.get('/:id', async (req, res) => {
 // @desc    Yeni bir post oluştur
 // @access  Private
 router.post('/', auth, async (req, res) => {
-    const { title, content, imageUrl, category } = req.body;
+    const {
+        title,
+        content,
+        shortDescription,
+        dailyPrice,
+        transmission,
+        fuelType,
+        passengers,
+        features,
+        galleryImageUrls,
+        imageUrl,
+        category
+    } = req.body;
 
     try {
         const newPost = new Post({
             title,
             content,
+            shortDescription,
+            dailyPrice,
+            transmission,
+            fuelType,
+            passengers,
+            features,
+            galleryImageUrls,
             imageUrl,
             category
         });

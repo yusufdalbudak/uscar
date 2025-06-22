@@ -41,37 +41,95 @@
 
         <!-- Main Content -->
         <main class="main-content flex-grow-1">
-            <h1 class="mb-4">Yeni Blog Yazısı Ekle</h1>
+            <h1 class="mb-4">Yeni Araç Ekle</h1>
 
             <div class="card">
                 <div class="card-body">
                     <form id="add-post-form">
-                        <div class="mb-3">
-                            <label for="postTitle" class="form-label">Yazı Başlığı</label>
-                            <input type="text" class="form-control" id="postTitle"
-                                placeholder="Blog yazınızın başlığını girin">
+                        <!-- Temel Bilgiler -->
+                        <h5 class="mb-3">Temel Bilgiler</h5>
+                        <div class="row">
+                            <div class="col-md-8 mb-3">
+                                <label for="postTitle" class="form-label">Araç Adı (Örn: BMW 5 Serisi)</label>
+                                <input type="text" class="form-control" id="postTitle" placeholder="Araç adı">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="dailyPrice" class="form-label">Günlük Fiyat (₺)</label>
+                                <input type="number" class="form-control" id="dailyPrice" placeholder="Örn: 2500">
+                            </div>
                         </div>
                         <div class="mb-3">
-                            <label for="postContent" class="form-label">Yazı İçeriği</label>
-                            <textarea class="form-control" id="postContent" rows="10"
-                                placeholder="Blog içeriğini buraya yazın..."></textarea>
+                            <label for="shortDescription" class="form-label">Kısa Açıklama (Kartta görünecek)</label>
+                            <input type="text" class="form-control" id="shortDescription"
+                                placeholder="Kısa ve dikkat çekici bir açıklama">
                         </div>
                         <div class="mb-3">
-                            <label for="postImage" class="form-label">Öne Çıkan Görsel URL'i</label>
+                            <label for="postContent" class="form-label">Detaylı Açıklama</label>
+                            <textarea class="form-control" id="postContent" rows="6"
+                                placeholder="Aracın detaylı açıklaması..."></textarea>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Araç Özellikleri -->
+                        <h5 class="mb-3">Araç Özellikleri</h5>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="postCategory" class="form-label">Kategori</label>
+                                <select class="form-select" id="postCategory">
+                                    <option selected disabled value="">Seçin...</option>
+                                    <option value="ekonomik">Ekonomik</option>
+                                    <option value="orta">Orta Sınıf</option>
+                                    <option value="lüks">Lüks</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="transmission" class="form-label">Vites Tipi</label>
+                                <select class="form-select" id="transmission">
+                                    <option selected disabled value="">Seçin...</option>
+                                    <option value="Otomatik">Otomatik</option>
+                                    <option value="Manuel">Manuel</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="fuelType" class="form-label">Yakıt Türü</label>
+                                <select class="form-select" id="fuelType">
+                                    <option selected disabled value="">Seçin...</option>
+                                    <option value="Benzin">Benzin</option>
+                                    <option value="Dizel">Dizel</option>
+                                    <option value="Elektrik">Elektrik</option>
+                                    <option value="Hibrit">Hibrit</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="passengers" class="form-label">Yolcu Kapasitesi</label>
+                                <input type="number" class="form-control" id="passengers" value="5">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="features" class="form-label">Ek Özellikler (Virgülle ayırarak girin)</label>
+                            <input type="text" class="form-control" id="features"
+                                placeholder="Deri Koltuk, Navigasyon, Sunroof...">
+                        </div>
+
+                        <hr class="my-4">
+
+                        <!-- Görsel Bilgileri -->
+                        <h5 class="mb-3">Görseller</h5>
+                        <div class="mb-3">
+                            <label for="postImage" class="form-label">Ana Görsel URL'i (Kartta görünecek)</label>
                             <input type="text" class="form-control" id="postImage"
                                 placeholder="https://ornek.com/resim.jpg">
                         </div>
                         <div class="mb-3">
-                            <label for="postCategory" class="form-label">Kategori</label>
-                            <select class="form-select" id="postCategory">
-                                <option selected disabled value="">Kategori Seçin...</option>
-                                <option value="ekonomik">Ekonomik</option>
-                                <option value="orta">Orta Sınıf</option>
-                                <option value="lüks">Lüks</option>
-                            </select>
+                            <label for="galleryImageUrls" class="form-label">Galeri Görselleri (Virgülle ayırarak
+                                girin)</label>
+                            <textarea class="form-control" id="galleryImageUrls" rows="3"
+                                placeholder="https://ornek.com/resim1.jpg, https://ornek.com/resim2.jpg, ..."></textarea>
                         </div>
-                        <button type="submit" class="btn btn-primary">Yazıyı Kaydet</button>
-                        <a href="admin-dashboard.html" class="btn btn-secondary">İptal</a>
+
+                        <button type="submit" class="btn btn-primary mt-3">Aracı Kaydet</button>
+                        <a href="admin-dashboard.html" class="btn btn-secondary mt-3">İptal</a>
                     </form>
                 </div>
             </div>
@@ -80,16 +138,26 @@
 
     <script>
         document.getElementById('add-post-form').addEventListener('submit', async function (e) {
-            e.preventDefault(); // Formun varsayılan gönderme işlemini engelle
+            e.preventDefault();
 
-            const title = document.getElementById('postTitle').value;
-            const content = document.getElementById('postContent').value;
-            const imageUrl = document.getElementById('postImage').value;
-            const category = document.getElementById('postCategory').value;
+            const postData = {
+                title: document.getElementById('postTitle').value,
+                content: document.getElementById('postContent').value,
+                shortDescription: document.getElementById('shortDescription').value,
+                dailyPrice: document.getElementById('dailyPrice').value,
+                imageUrl: document.getElementById('postImage').value,
+                category: document.getElementById('postCategory').value,
+                transmission: document.getElementById('transmission').value,
+                fuelType: document.getElementById('fuelType').value,
+                passengers: document.getElementById('passengers').value,
+                features: document.getElementById('features').value.split(',').map(item => item.trim()).filter(item => item),
+                galleryImageUrls: document.getElementById('galleryImageUrls').value.split(',').map(item => item.trim()).filter(item => item)
+            };
+
             const button = this.querySelector('button[type="submit"]');
 
-            if (!category) {
-                alert('Lütfen bir kategori seçin.');
+            if (!postData.category || !postData.transmission || !postData.fuelType) {
+                alert('Lütfen Kategori, Vites ve Yakıt tipi alanlarını doldurun.');
                 return;
             }
 
@@ -104,7 +172,7 @@
                         'Content-Type': 'application/json',
                         'x-auth-token': token
                     },
-                    body: JSON.stringify({ title, content, imageUrl, category }),
+                    body: JSON.stringify(postData),
                 });
 
                 if (!response.ok) {
@@ -112,21 +180,16 @@
                     throw new Error(errorData.msg || 'Bir hata oluştu. Sunucu yanıt vermiyor.');
                 }
 
-                const newPost = await response.json();
-                console.log('Yeni yazı başarıyla eklendi:', newPost);
-                alert('Yazı başarıyla veritabanına kaydedildi!');
-
-                // Formu temizle
+                alert('Araç başarıyla veritabanına kaydedildi!');
                 this.reset();
-                // Kullanıcıyı admin paneline yönlendir
                 window.location.href = 'admin-dashboard.html';
 
             } catch (error) {
-                console.error('Yazı eklenirken hata:', error);
+                console.error('Araç eklenirken hata:', error);
                 alert('Hata: ' + error.message);
             } finally {
                 button.disabled = false;
-                button.textContent = 'Yazıyı Kaydet';
+                button.textContent = 'Aracı Kaydet';
             }
         });
     </script>

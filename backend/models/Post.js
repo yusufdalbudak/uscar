@@ -9,6 +9,39 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: false
     },
+    shortDescription: {
+        type: String,
+        required: false,
+        default: ''
+    },
+    dailyPrice: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    transmission: {
+        type: String,
+        required: true,
+        enum: ['Otomatik', 'Manuel']
+    },
+    fuelType: {
+        type: String,
+        required: true,
+        enum: ['Benzin', 'Dizel', 'Elektrik', 'Hibrit']
+    },
+    passengers: {
+        type: Number,
+        required: true,
+        default: 5
+    },
+    features: {
+        type: [String],
+        default: []
+    },
+    galleryImageUrls: {
+        type: [String],
+        default: []
+    },
     imageUrl: {
         type: String,
         required: false,
