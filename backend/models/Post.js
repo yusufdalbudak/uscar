@@ -14,6 +14,11 @@ const postSchema = new mongoose.Schema({
         required: false,
         default: 'https://via.placeholder.com/400x250.png?text=US-CAR'
     },
+    category: {
+        type: String,
+        required: true,
+        enum: ['ekonomik', 'orta', 'lüks']
+    },
     createdAt: {
         type: Date,
         default: Date.now

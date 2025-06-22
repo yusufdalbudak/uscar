@@ -61,6 +61,15 @@
                             <input type="text" class="form-control" id="postImage"
                                 placeholder="https://ornek.com/resim.jpg">
                         </div>
+                        <div class="mb-3">
+                            <label for="postCategory" class="form-label">Kategori</label>
+                            <select class="form-select" id="postCategory">
+                                <option selected disabled value="">Kategori Seçin...</option>
+                                <option value="ekonomik">Ekonomik</option>
+                                <option value="orta">Orta Sınıf</option>
+                                <option value="lüks">Lüks</option>
+                            </select>
+                        </div>
                         <button type="submit" class="btn btn-primary">Yazıyı Kaydet</button>
                         <a href="admin-dashboard.html" class="btn btn-secondary">İptal</a>
                     </form>
@@ -76,7 +85,13 @@
             const title = document.getElementById('postTitle').value;
             const content = document.getElementById('postContent').value;
             const imageUrl = document.getElementById('postImage').value;
+            const category = document.getElementById('postCategory').value;
             const button = this.querySelector('button[type="submit"]');
+
+            if (!category) {
+                alert('Lütfen bir kategori seçin.');
+                return;
+            }
 
             button.disabled = true;
             button.textContent = 'Kaydediliyor...';
@@ -89,11 +104,12 @@
                         'Content-Type': 'application/json',
                         'x-auth-token': token
                     },
-                    body: JSON.stringify({ title, content, imageUrl }),
+                    body: JSON.stringify({ title, content, imageUrl, category }),
                 });
 
                 if (!response.ok) {
-                    throw new Error('Bir hata oluştu. Sunucu yanıt vermiyor.');
+                    const errorData = await response.json();
+                    throw new Error(errorData.msg || 'Bir hata oluştu. Sunucu yanıt vermiyor.');
                 }
 
                 const newPost = await response.json();

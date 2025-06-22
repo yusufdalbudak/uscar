@@ -17,35 +17,24 @@
 
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top py-2">
         <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <i class="fas fa-car-side"></i> US-CAR
+            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+                <img src="src/assets/Screenshot 2025-06-20 202813.png" alt="US-CAR Logo" width="40" height="40"
+                    class="rounded-circle bg-primary-subtle p-1">
+                <span class="fw-bold fs-4">US-CAR</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
+                aria-controls="mainNav" aria-expanded="false" aria-label="Menüyü Aç/Kapat">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html">Anasayfa</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="index.html#cars">Araçlarımız</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Kampanyalar</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Hakkımızda</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">İletişim</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="blog.html">Blog</a>
-                    </li>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 gap-lg-3">
+                    <li class="nav-item"><a class="nav-link" href="index.html">Anasayfa</a></li>
+                    <li class="nav-item"><a class="nav-link" href="cars.html">Araçlar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#campaigns">Kampanyalar</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#about">Hakkımızda</a></li>
+                    <li class="nav-item"><a class="nav-link" href="index.html#contact">İletişim</a></li>
                 </ul>
             </div>
         </div>
@@ -59,9 +48,65 @@
     </section>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white text-center p-4 mt-5">
+    <footer class="bg-dark text-white py-5 mt-5">
         <div class="container">
-            <p>&copy; 2025 US-CAR. Tüm hakları saklıdır.</p>
+            <div class="row">
+                <div class="col-12 col-md-4 mb-4 mb-md-0">
+                    <a class="d-inline-flex align-items-center gap-2 text-white text-decoration-none mb-3"
+                        href="index.html">
+                        <img src="src/assets/Screenshot 2025-06-20 202813.png" alt="US-CAR Logo" width="40" height="40"
+                            class="rounded-circle bg-primary-subtle p-1">
+                        <span class="fw-bold fs-5">US-CAR</span>
+                    </a>
+                    <p class="text-white-50">Lüks araç kiralama sektöründe konfor, güvenlik ve prestiji bir arada
+                        sunuyoruz.</p>
+                    <div class="d-flex gap-3 mt-3">
+                        <a href="https://www.instagram.com/us_cartr/" class="footer-social instagram text-white-50 fs-5"
+                            aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="footer-social facebook text-white-50 fs-5" aria-label="Facebook"><i
+                                class="fab fa-facebook"></i></a>
+                        <a href="#" class="footer-social twitter text-white-50 fs-5" aria-label="Twitter"><i
+                                class="fab fa-twitter"></i></a>
+                    </div>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="text-uppercase fw-bold mb-3">Hızlı Erişim</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Anasayfa</a>
+                        </li>
+                        <li class="mb-2"><a href="cars.html" class="text-white-50 text-decoration-none">Araçlar</a></li>
+                        <li class="mb-2"><a href="index.html#campaigns"
+                                class="text-white-50 text-decoration-none">Kampanyalar</a></li>
+                        <li class="mb-2"><a href="index.html#about"
+                                class="text-white-50 text-decoration-none">Hakkımızda</a></li>
+                        <li class="mb-2"><a href="index.html#contact"
+                                class="text-white-50 text-decoration-none">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="text-uppercase fw-bold mb-3">Kategoriler</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><a href="blog.html" class="text-white-50 text-decoration-none"
+                                target="_blank">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4 mt-4 mt-md-0">
+                    <h6 class="text-uppercase fw-bold mb-3">Yasal</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <button type="button" class="btn btn-link text-white-50 p-0 text-decoration-none"
+                                data-bs-toggle="modal" data-bs-target="#privacyModal">
+                                Gizlilik Politikası
+                            </button>
+                        </li>
+                        <li class="mb-2"><a href="admin.html" class="text-white-50 text-decoration-none"
+                                target="_blank">Admin Girişi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="text-center text-white-50 small mt-5 pt-4 border-top border-secondary">
+                © 2025 US-CAR. Tüm hakları saklıdır.
+            </div>
         </div>
     </footer>
 

@@ -8,7 +8,12 @@ const auth = require('../middleware/auth'); // Auth middleware'ini import et
 // @access  Public
 router.get('/', async (req, res) => {
     try {
-        const posts = await Post.find().sort({ createdAt: -1 });
+        const { category } = req.query;
+        const filter = {};
+        if (category && category !== 'all') {
+            filter.category = category;
+        }
+        const posts = await Post.find(filter).sort({ createdAt: -1 });
         res.json(posts);
     } catch (err) {
         console.error(err.message);
@@ -41,13 +46,14 @@ router.get('/:id', async (req, res) => {
 // @desc    Yeni bir post oluştur
 // @access  Private
 router.post('/', auth, async (req, res) => {
-    const { title, content, imageUrl } = req.body;
+    const { title, content, imageUrl, category } = req.body;
 
     try {
         const newPost = new Post({
             title,
             content,
-            imageUrl
+            imageUrl,
+            category
         });
 
         const post = await newPost.save();
