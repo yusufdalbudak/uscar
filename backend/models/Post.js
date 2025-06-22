@@ -34,6 +34,51 @@ const postSchema = new mongoose.Schema({
         required: true,
         default: 5
     },
+    doorCount: {
+        type: Number,
+        required: false,
+        default: 4
+    },
+    luggageCapacity: {
+        type: String,
+        required: false,
+        default: '425lt'
+    },
+    modelYear: {
+        type: String,
+        required: false,
+        default: 'Bilinmiyor'
+    },
+    bodyType: {
+        type: String,
+        required: false,
+        default: 'Bilinmiyor'
+    },
+    engineVolume: {
+        type: String,
+        required: false,
+        default: 'Bilinmiyor'
+    },
+    fuelConsumption: {
+        type: String,
+        required: false,
+        default: 'Bilinmiyor'
+    },
+    carbonEmission: {
+        type: String,
+        required: false,
+        default: 'Bilinmiyor'
+    },
+    minLicenseAge: {
+        type: Number,
+        required: false,
+        default: 2
+    },
+    minDriverAge: {
+        type: Number,
+        required: false,
+        default: 25
+    },
     features: {
         type: [String],
         default: []

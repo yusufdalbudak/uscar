@@ -5,42 +5,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Araç Detayları | US-CAR</title>
-    <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <!-- Google Fonts: Montserrat -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="css/styles.css">
     <style>
-        .main-car-image {
-            height: 450px;
-            object-fit: cover;
-            border-radius: .5rem;
-        }
-
-        .gallery-thumbnails img {
-            height: 90px;
-            object-fit: cover;
-            cursor: pointer;
-            border: 2px solid transparent;
-            border-radius: .25rem;
-            transition: border-color .2s;
-        }
-
-        .gallery-thumbnails img:hover,
-        .gallery-thumbnails img.active {
-            border-color: #0d6efd;
-        }
-
-        .spec-icon {
-            font-size: 1.5rem;
-            color: #0d6efd;
-        }
-
-        .price-card {
+        body {
             background-color: #f8f9fa;
+        }
+
+        .hero-section {
+            background-color: #3e4a6e;
+            color: white;
+            padding: 60px 0;
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: 'US-CAR';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 15vw;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.05);
+            z-index: 0;
+        }
+
+        .car-image {
+            max-width: 80%;
+            display: block;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .spec-box {
+            background-color: white;
+            color: #333;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spec-box i {
+            font-size: 2rem;
+            color: #3e4a6e;
+            margin-bottom: 10px;
+        }
+
+        .spec-box .spec-title {
+            font-weight: bold;
+        }
+
+        .spec-table th {
+            width: 35%;
+        }
+
+        #detailed-content {
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-top: 30px;
         }
     </style>
 </head>
@@ -54,8 +87,7 @@
                     class="rounded-circle bg-primary-subtle p-1">
                 <span class="fw-bold fs-4">US-CAR</span>
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav"
-                aria-controls="mainNav" aria-expanded="false" aria-label="Menüyü Aç/Kapat">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="mainNav">
@@ -70,15 +102,13 @@
         </div>
     </nav>
 
-    <!-- Post Content Section -->
-    <main class="container my-5 pt-5">
-        <div id="post-container" class="row">
-            <!-- Dinamik içerik buraya gelecek -->
-        </div>
-    </main>
+    <!-- Dinamik İçerik Alanı -->
+    <div id="post-container">
+        <!-- Burası JS ile doldurulacak -->
+    </div>
 
     <!-- Footer -->
-    <footer class="bg-dark text-white py-5 mt-5">
+    <footer class="bg-dark text-white py-5 mt-0">
         <div class="container">
             <div class="row">
                 <div class="col-12 col-md-4 mb-4 mb-md-0">
@@ -90,13 +120,40 @@
                     </a>
                     <p class="text-white-50">Lüks araç kiralama sektöründe konfor, güvenlik ve prestiji bir arada
                         sunuyoruz.</p>
+                    <div class="d-flex gap-3 mt-3">
+                        <a href="https://www.instagram.com/us_cartr/" class="footer-social instagram text-white-50 fs-5"
+                            aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="footer-social facebook text-white-50 fs-5" aria-label="Facebook"><i
+                                class="fab fa-facebook"></i></a>
+                        <a href="#" class="footer-social twitter text-white-50 fs-5" aria-label="Twitter"><i
+                                class="fab fa-twitter"></i></a>
+                    </div>
                 </div>
-                <div class="col-6 col-md-2">
+                <div class="col-6 col-md-4">
                     <h6 class="text-uppercase fw-bold mb-3">Hızlı Erişim</h6>
                     <ul class="list-unstyled">
                         <li class="mb-2"><a href="index.html" class="text-white-50 text-decoration-none">Anasayfa</a>
                         </li>
                         <li class="mb-2"><a href="cars.html" class="text-white-50 text-decoration-none">Araçlar</a></li>
+                        <li class="mb-2"><a href="index.html#campaigns"
+                                class="text-white-50 text-decoration-none">Kampanyalar</a></li>
+                        <li class="mb-2"><a href="index.html#about"
+                                class="text-white-50 text-decoration-none">Hakkımızda</a></li>
+                        <li class="mb-2"><a href="index.html#contact"
+                                class="text-white-50 text-decoration-none">İletişim</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-4 mt-4 mt-md-0">
+                    <h6 class="text-uppercase fw-bold mb-3">Yasal</h6>
+                    <ul class="list-unstyled">
+                        <li class="mb-2">
+                            <button type="button" class="btn btn-link text-white-50 p-0 text-decoration-none"
+                                data-bs-toggle="modal" data-bs-target="#privacyModal">
+                                Gizlilik Politikası
+                            </button>
+                        </li>
+                        <li class="mb-2"><a href="admin.html" class="text-white-50 text-decoration-none"
+                                target="_blank">Admin Girişi</a></li>
                     </ul>
                 </div>
             </div>
@@ -106,7 +163,6 @@
         </div>
     </footer>
 
-    <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', async () => {
@@ -115,11 +171,11 @@
             const postId = urlParams.get('id');
 
             if (!postId) {
-                postContainer.innerHTML = '<div class="col-12 text-center"><h1>Araç bulunamadı.</h1><p>Geçerli bir araç ID\'si belirtilmedi. <a href="cars.html">Araç listesine geri dönün</a>.</p></div>';
+                postContainer.innerHTML = '<div class="container text-center my-5 py-5"><h1>Araç bulunamadı.</h1><p>Geçerli bir araç ID\'si belirtilmedi. <a href="cars.html">Araç listesine geri dönün</a>.</p></div>';
                 return;
             }
 
-            postContainer.innerHTML = '<div class="col-12 text-center"><h3><i class="fas fa-spinner fa-spin"></i> Araç bilgileri yükleniyor...</h3></div>';
+            postContainer.innerHTML = '<div class="container text-center my-5 py-5"><h3><i class="fas fa-spinner fa-spin"></i> Araç bilgileri yükleniyor...</h3></div>';
 
             try {
                 const response = await fetch(`/api/posts/${postId}`);
@@ -128,89 +184,70 @@
 
                 document.title = `${car.title} | US-CAR`;
 
-                let galleryImages = [car.imageUrl, ...car.galleryImageUrls].filter(Boolean);
-
-                const featuresHtml = car.features.map(feature => `<li class="list-group-item"><i class="fas fa-check-circle text-success me-2"></i>${feature}</li>`).join('');
-
                 postContainer.innerHTML = `
-                    <div class="col-lg-8">
-                        <!-- Galeri -->
-                        <div class="mb-4">
-                            <img src="${galleryImages[0]}" class="main-car-image w-100 mb-2" id="main-car-image" alt="${car.title}">
-                            <div class="d-flex flex-wrap gap-2 gallery-thumbnails">
-                                ${galleryImages.map((img, index) => `<img src="${img}" class="${index === 0 ? 'active' : ''}" onclick="changeImage('${img}')" alt="Galeri resmi ${index + 1}">`).join('')}
+                    <section class="hero-section">
+                        <div class="container position-relative" style="z-index: 1;">
+                            <div class="row align-items-center">
+                                <div class="col-lg-7">
+                                    <h1 class="display-4 fw-bold">${car.title}</h1>
+                                    <p class="lead">veya benzeri</p>
+                                </div>
+                                <div class="col-lg-5">
+                                     <img src="${car.imageUrl}" class="car-image" alt="${car.title}">
+                                </div>
                             </div>
+                        </div>
+                    </section>
+                    
+                    <main class="container my-5">
+                        <div class="row g-4">
+                            <!-- Ana Özellikler -->
+                            <div class="col-6 col-md-4 col-lg"><div class="spec-box"><i class="fas fa-cogs"></i><span class="spec-title">${car.transmission}</span></div></div>
+                            <div class="col-6 col-md-4 col-lg"><div class="spec-box"><i class="fas fa-gas-pump"></i><span class="spec-title">${car.fuelType}</span></div></div>
+                            <div class="col-6 col-md-4 col-lg"><div class="spec-box"><i class="fas fa-users"></i><span class="spec-title">${car.passengers} Kişilik</span></div></div>
+                            <div class="col-6 col-md-6 col-lg"><div class="spec-box"><i class="fas fa-shopping-bag"></i><span class="spec-title">${car.luggageCapacity}</span></div></div>
+                            <div class="col-12 col-md-6 col-lg"><div class="spec-box"><i class="fas fa-door-open"></i><span class="spec-title">${car.doorCount} Kapılı</span></div></div>
                         </div>
 
-                        <!-- Detaylar -->
-                        <ul class="nav nav-tabs mb-3" id="carTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" id="details-tab" data-bs-toggle="tab" data-bs-target="#details" type="button" role="tab">Araç Açıklaması</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" id="features-tab" data-bs-toggle="tab" data-bs-target="#features" type="button" role="tab">Özellikler</button>
-                            </li>
-                        </ul>
-                        <div class="tab-content" id="carTabContent">
-                            <div class="tab-pane fade show active" id="details" role="tabpanel">
-                                <p>${car.content || 'Bu araç için detaylı bir açıklama bulunmamaktadır.'}</p>
-                            </div>
-                            <div class="tab-pane fade" id="features" role="tabpanel">
-                                <ul class="list-group list-group-flush">
-                                    ${featuresHtml || '<li class="list-group-item">Özellik bilgisi mevcut değil.</li>'}
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-lg-4">
-                        <!-- Fiyat ve Temel Özellikler -->
-                        <div class="card shadow-sm sticky-top" style="top: 100px;">
-                            <div class="card-body">
-                                <h1 class="h3">${car.title}</h1>
-                                <p class="text-muted">${car.shortDescription}</p>
-                                <hr>
-                                <div class="price-card border rounded p-3 text-center mb-4">
-                                    <p class="mb-0">Günlük Kiralama Fiyatı</p>
-                                    <p class="h2 fw-bold text-primary mb-0">${car.dailyPrice} ₺</p>
-                                </div>
-                                <div class="row text-center mb-3">
-                                    <div class="col-6 col-md-3 col-lg-6 mb-3 mb-lg-0">
-                                        <i class="fas fa-user-friends spec-icon"></i>
-                                        <p class="mb-0 mt-1">${car.passengers} Yolcu</p>
-                                    </div>
-                                    <div class="col-6 col-md-3 col-lg-6">
-                                        <i class="fas fa-cogs spec-icon"></i>
-                                        <p class="mb-0 mt-1">${car.transmission}</p>
-                                    </div>
-                                    <div class="col-6 col-md-3 col-lg-6">
-                                        <i class="fas fa-gas-pump spec-icon"></i>
-                                        <p class="mb-0 mt-1">${car.fuelType}</p>
-                                    </div>
-                                    <div class="col-6 col-md-3 col-lg-6">
-                                        <i class="fas fa-car spec-icon"></i>
-                                        <p class="mb-0 mt-1 text-capitalize">${car.category}</p>
+                        <div class="row mt-5">
+                            <div class="col-lg-8">
+                                <div id="detailed-content">
+                                    <h3 class="mb-4">${car.title}</h3>
+                                    <div class="content-text">
+                                        ${car.content.replace(/\\n/g, '<br>') || 'Bu araç için detaylı bir açıklama bulunmamaktadır.'}
                                     </div>
                                 </div>
-                                <div class="d-grid">
-                                    <a href="index.html#contact" class="btn btn-lg btn-success">Hemen Kirala</a>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="card">
+                                    <div class="card-header fw-bold">Teknik Özellikler</div>
+                                    <div class="card-body">
+                                        <table class="table table-striped spec-table">
+                                            <tbody>
+                                                <tr><th>Model</th><td>${car.modelYear}</td></tr>
+                                                <tr><th>Gövde Tipi</th><td>${car.bodyType}</td></tr>
+                                                <tr><th>Motor Hacmi</th><td>${car.engineVolume} cc</td></tr>
+                                                <tr><th>Yakıt Tüketimi</th><td>${car.fuelConsumption}</td></tr>
+                                                <tr><th>Karbon Emisyonu</th><td>${car.carbonEmission}</td></tr>
+                                                <tr><th>Min. Ehliyet Yaşı</th><td>${car.minLicenseAge}</td></tr>
+                                                <tr><th>Min. Sürücü Yaşı</th><td>${car.minDriverAge}</td></tr>
+                                            </tbody>
+                                        </table>
+                                        <div class="d-grid mt-4">
+                                            <a href="index.html#contact" class="btn btn-success btn-lg">Hemen Kirala</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </main>
                 `;
+
             } catch (error) {
                 console.error('Araç detayı getirilirken hata:', error);
-                postContainer.innerHTML = `<div class="col-12 text-center"><h1 class="text-danger">Hata</h1><p>Araç bilgileri yüklenemedi. Lütfen daha sonra tekrar deneyin.</p> <a href="cars.html">Araç listesine geri dönün</a>.</div>`;
+                postContainer.innerHTML = `<div class="container text-center my-5 py-5"><h1 class="text-danger">Hata</h1><p>Araç bilgileri yüklenemedi. Lütfen daha sonra tekrar deneyin.</p> <a href="cars.html">Araç listesine geri dönün</a>.</div>`;
             }
         });
-
-        function changeImage(src) {
-            document.getElementById('main-car-image').src = src;
-            const thumbnails = document.querySelectorAll('.gallery-thumbnails img');
-            thumbnails.forEach(thumb => {
-                thumb.classList.toggle('active', thumb.src === src);
-            });
-        }
     </script>
 </body>
 

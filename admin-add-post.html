@@ -47,33 +47,16 @@
                 <div class="card-body">
                     <form id="add-post-form">
                         <!-- Temel Bilgiler -->
-                        <h5 class="mb-3">Temel Bilgiler</h5>
+                        <h5 class="mb-3 border-bottom pb-2">Temel Bilgiler</h5>
                         <div class="row">
-                            <div class="col-md-8 mb-3">
-                                <label for="postTitle" class="form-label">Araç Adı (Örn: BMW 5 Serisi)</label>
+                            <div class="col-md-6 mb-3">
+                                <label for="postTitle" class="form-label">Araç Adı (Örn: Audi A3)</label>
                                 <input type="text" class="form-control" id="postTitle" placeholder="Araç adı">
                             </div>
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-3 mb-3">
                                 <label for="dailyPrice" class="form-label">Günlük Fiyat (₺)</label>
                                 <input type="number" class="form-control" id="dailyPrice" placeholder="Örn: 2500">
                             </div>
-                        </div>
-                        <div class="mb-3">
-                            <label for="shortDescription" class="form-label">Kısa Açıklama (Kartta görünecek)</label>
-                            <input type="text" class="form-control" id="shortDescription"
-                                placeholder="Kısa ve dikkat çekici bir açıklama">
-                        </div>
-                        <div class="mb-3">
-                            <label for="postContent" class="form-label">Detaylı Açıklama</label>
-                            <textarea class="form-control" id="postContent" rows="6"
-                                placeholder="Aracın detaylı açıklaması..."></textarea>
-                        </div>
-
-                        <hr class="my-4">
-
-                        <!-- Araç Özellikleri -->
-                        <h5 class="mb-3">Araç Özellikleri</h5>
-                        <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="postCategory" class="form-label">Kategori</label>
                                 <select class="form-select" id="postCategory">
@@ -83,6 +66,11 @@
                                     <option value="lüks">Lüks</option>
                                 </select>
                             </div>
+                        </div>
+
+                        <!-- Ana Özellikler -->
+                        <h5 class="mt-4 mb-3 border-bottom pb-2">Ana Özellikler (Detay sayfasındaki kutucuklar)</h5>
+                        <div class="row">
                             <div class="col-md-3 mb-3">
                                 <label for="transmission" class="form-label">Vites Tipi</label>
                                 <select class="form-select" id="transmission">
@@ -101,13 +89,71 @@
                                     <option value="Hibrit">Hibrit</option>
                                 </select>
                             </div>
-                            <div class="col-md-3 mb-3">
-                                <label for="passengers" class="form-label">Yolcu Kapasitesi</label>
+                            <div class="col-md-2 mb-3">
+                                <label for="passengers" class="form-label">Yolcu Sayısı</label>
                                 <input type="number" class="form-control" id="passengers" value="5">
                             </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="doorCount" class="form-label">Kapı Sayısı</label>
+                                <input type="number" class="form-control" id="doorCount" value="4">
+                            </div>
+                            <div class="col-md-2 mb-3">
+                                <label for="luggageCapacity" class="form-label">Bagaj Hacmi</label>
+                                <input type="text" class="form-control" id="luggageCapacity" placeholder="Örn: 425lt">
+                            </div>
+                        </div>
+
+                        <!-- Detaylı Teknik Özellikler -->
+                        <h5 class="mt-4 mb-3 border-bottom pb-2">Detaylı Teknik Özellikler (Detay sayfasındaki tablo)
+                        </h5>
+                        <div class="row">
+                            <div class="col-md-3 mb-3">
+                                <label for="modelYear" class="form-label">Model</label>
+                                <input type="text" class="form-control" id="modelYear" placeholder="Örn: 2023 ve üzeri">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="bodyType" class="form-label">Gövde Tipi</label>
+                                <input type="text" class="form-control" id="bodyType" placeholder="Örn: Lüks - Sedan">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="engineVolume" class="form-label">Motor Hacmi</label>
+                                <input type="text" class="form-control" id="engineVolume" placeholder="Örn: 1498">
+                            </div>
+                            <div class="col-md-3 mb-3">
+                                <label for="fuelConsumption" class="form-label">Yakıt Tüketimi</label>
+                                <input type="text" class="form-control" id="fuelConsumption" placeholder="Örn: 5.1 lt">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="carbonEmission" class="form-label">Karbon Emisyonu</label>
+                                <input type="text" class="form-control" id="carbonEmission"
+                                    placeholder="Örn: Var / 120 g/km">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="minLicenseAge" class="form-label">Min. Ehliyet Yaşı</label>
+                                <input type="number" class="form-control" id="minLicenseAge" placeholder="Örn: 2">
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="minDriverAge" class="form-label">Min. Sürücü Yaşı</label>
+                                <input type="number" class="form-control" id="minDriverAge" placeholder="Örn: 25">
+                            </div>
+                        </div>
+
+                        <!-- Açıklama ve Ek Özellikler -->
+                        <h5 class="mt-4 mb-3 border-bottom pb-2">Açıklama ve Ek Özellikler</h5>
+                        <div class="mb-3">
+                            <label for="shortDescription" class="form-label">Kısa Açıklama (Kartta görünecek)</label>
+                            <input type="text" class="form-control" id="shortDescription"
+                                placeholder="Kısa ve dikkat çekici bir açıklama">
                         </div>
                         <div class="mb-3">
-                            <label for="features" class="form-label">Ek Özellikler (Virgülle ayırarak girin)</label>
+                            <label for="postContent" class="form-label">Detaylı Açıklama / SSS (Detay sayfasında
+                                görünecek)</label>
+                            <textarea class="form-control" id="postContent" rows="8"
+                                placeholder="Aracın detaylı açıklaması, Sıkça Sorulan Sorular..."></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label for="features" class="form-label">Ek Donanım Özellikleri (Virgülle ayırarak
+                                girin)</label>
                             <input type="text" class="form-control" id="features"
                                 placeholder="Deri Koltuk, Navigasyon, Sunroof...">
                         </div>
@@ -142,22 +188,35 @@
 
             const postData = {
                 title: document.getElementById('postTitle').value,
-                content: document.getElementById('postContent').value,
-                shortDescription: document.getElementById('shortDescription').value,
                 dailyPrice: document.getElementById('dailyPrice').value,
-                imageUrl: document.getElementById('postImage').value,
                 category: document.getElementById('postCategory').value,
+
                 transmission: document.getElementById('transmission').value,
                 fuelType: document.getElementById('fuelType').value,
                 passengers: document.getElementById('passengers').value,
+                doorCount: document.getElementById('doorCount').value,
+                luggageCapacity: document.getElementById('luggageCapacity').value,
+
+                modelYear: document.getElementById('modelYear').value,
+                bodyType: document.getElementById('bodyType').value,
+                engineVolume: document.getElementById('engineVolume').value,
+                fuelConsumption: document.getElementById('fuelConsumption').value,
+                carbonEmission: document.getElementById('carbonEmission').value,
+                minLicenseAge: document.getElementById('minLicenseAge').value,
+                minDriverAge: document.getElementById('minDriverAge').value,
+
+                shortDescription: document.getElementById('shortDescription').value,
+                content: document.getElementById('postContent').value,
                 features: document.getElementById('features').value.split(',').map(item => item.trim()).filter(item => item),
+
+                imageUrl: document.getElementById('postImage').value,
                 galleryImageUrls: document.getElementById('galleryImageUrls').value.split(',').map(item => item.trim()).filter(item => item)
             };
 
             const button = this.querySelector('button[type="submit"]');
 
-            if (!postData.category || !postData.transmission || !postData.fuelType) {
-                alert('Lütfen Kategori, Vites ve Yakıt tipi alanlarını doldurun.');
+            if (!postData.category || !postData.transmission || !postData.fuelType || !postData.title || !postData.dailyPrice) {
+                alert('Lütfen yıldızlı temel alanları (Araç Adı, Fiyat, Kategori, Vites, Yakıt) doldurun.');
                 return;
             }
 
